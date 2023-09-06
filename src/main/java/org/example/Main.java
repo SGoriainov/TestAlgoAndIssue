@@ -4,37 +4,44 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+//        if (word_a[i] == word_b[1]) {
+//            cell[i][j] = cell[i - 1][j - 1] + 1;
+//        } else {
+//            cell[i][j] = Math.Max(cell[i - 1][j], cell[i][j - 1]);
+//        }
+            String wordA = "blue";
+            String wordB = "clue";
+            int[][] cell = new int[wordA.length()][wordB.length()];
 
-        Set<String> statesNeeded = new HashSet(Arrays.asList
-                ("mt", "wa", "or", "id", "nv", "ut", "ca", "az"));
-        Map<String, Set<String>> stations = new LinkedHashMap<>();
-
-        stations.put("kone", new HashSet<>(Arrays.asList("id", "nv", "ut")));
-        stations.put("ktwo", new HashSet<>(Arrays.asList("wa", "id", "mt")));
-        stations.put("kthree", new HashSet<>(Arrays.asList("or", "nv", "ca")));
-        stations.put("kfour", new HashSet<>(Arrays.asList("nv", "ut")));
-        stations.put("kfive", new HashSet<>(Arrays.asList("ca", "az")));
-
-        Set<String> finalStations = new HashSet<String>();
-        while (!statesNeeded.isEmpty()) {
-            String bestStation = null;
-            Set<String> statesCovered = new HashSet<>();
-
-            for (Map.Entry<String, Set<String>> station : stations.entrySet()) {
-                Set<String> covered = new HashSet<>(statesNeeded);
-                covered.retainAll(station.getValue());
-
-                if (covered.size() > statesCovered.size()) {
-                    bestStation = station.getKey();
-                    statesCovered = covered;
-                }
-                statesNeeded.removeIf(statesCovered::contains);
-
-                if (bestStation != null) {
-                    finalStations.add(bestStation);
+            for (int i = 0; i < wordA.length(); i++) {
+                for (int j = 0; j < wordB.length(); j++) {
+                    // The letters match
+                    if (wordA.charAt(i) == wordB.charAt(j)) {
+                        if (i > 0 && j > 0) {
+                            cell[i][j] = cell[i - 1][j - 1] + 1;
+                        } else {
+                            cell[i][j] = 1;
+                        }
+                    } else {
+                        // The letters don't match.
+                        if (i > 0 && j > 0) {
+                            cell[i][j] = Math.max(cell[i - 1][j], cell[i][j - 1]);
+                        } else {
+                            cell[i][j] = 0;
+                        }
+                    }
                 }
             }
+
+            printResult(cell);
+//      [0, 0, 0, 1]
+//      [0, 1, 1, 1]
+//      [0, 1, 2, 2]
+//      [0, 1, 2, 3]
         }
-        System.out.println(finalStations); // [ktwo, kone, kthree, kfive]
+        private static void printResult(int[][] arr) {
+            for (int[] row : arr) {
+                System.out.println(Arrays.toString(row));
+            }
+        }
     }
-}
