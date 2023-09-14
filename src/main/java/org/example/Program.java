@@ -4,53 +4,64 @@ import java.util.Scanner;
 
 import java.util.concurrent.Semaphore;
 
+import java.util.concurrent.Phaser;
+
 public class Program {
 
     public static void main(String[] args) {
 
-        Semaphore sem = new Semaphore(2);
-        for(int i=1;i<6;i++)
-            new Philosopher(sem,i).start();
+        Phaser phaser = new Phaser(1);
+        new Thread(new PhaseThread(phaser, "PhaseThread 1")).start();
+        new Thread(new PhaseThread(phaser, "PhaseThread 2")).start();
+
+        // ждем завершения фазы 0
+        int phase = phaser.getPhase();
+        phaser.arriveAndAwaitAdvance();
+        System.out.println("Фаза " + phase + " завершена");
+        // ждем завершения фазы 1
+        phase = phaser.getPhase();
+        phaser.arriveAndAwaitAdvance();
+        System.out.println("Фаза " + phase + " завершена");
+
+        // ждем завершения фазы 2
+        phase = phaser.getPhase();
+        phaser.arriveAndAwaitAdvance();
+        System.out.println("Фаза " + phase + " завершена");
+
+        phaser.arriveAndDeregister();
     }
 }
-// класс философа
-class Philosopher extends Thread
-{
-    Semaphore sem; // семафор. ограничивающий число философов
-    // кол-во приемов пищи
-    int num = 0;
-    // условный номер философа
-    int id;
-    // в качестве параметров конструктора передаем идентификатор философа и семафор
-    Philosopher(Semaphore sem, int id)
-    {
-        this.sem=sem;
-        this.id=id;
+
+class PhaseThread implements Runnable {
+
+    Phaser phaser;
+    String name;
+
+    PhaseThread(Phaser p, String n) {
+
+        this.phaser = p;
+        this.name = n;
+        phaser.register();
     }
 
-    public void run()
-    {
-        try
-        {
-            while(num<3)// пока количество приемов пищи не достигнет 3
-            {
-                //Запрашиваем у семафора разрешение на выполнение
-                sem.acquire();
-                System.out.println ("Философ " + id+" садится за стол");
-                // философ ест
-                sleep(500);
-                num++;
+    public void run() {
 
-                System.out.println ("Философ " + id+" выходит из-за стола");
-                sem.release();
+        System.out.println(name + " выполняет фазу " + phaser.getPhase());
+        phaser.arriveAndAwaitAdvance(); // сообщаем, что первая фаза достигнута
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException ex) {
+            System.out.println(ex.getMessage());
+        }
 
-                // философ гуляет
-                sleep(500);
-            }
+        System.out.println(name + " выполняет фазу " + phaser.getPhase());
+        phaser.arriveAndAwaitAdvance(); // сообщаем, что вторая фаза достигнута
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException ex) {
+            System.out.println(ex.getMessage());
         }
-        catch(InterruptedException e)
-        {
-            System.out.println ("у философа " + id + " проблемы со здоровьем");
-        }
+        System.out.println(name + " выполняет фазу " + phaser.getPhase());
+        phaser.arriveAndDeregister(); // сообщаем о завершении фаз и удаляем с регистрации объекты
     }
 }
