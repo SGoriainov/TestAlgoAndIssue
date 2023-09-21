@@ -6,20 +6,19 @@ import java.util.List;
 
 
 public class Program {
-//2824. Count Pairs Whose Sum is Less than Target
+//1365. How Many Numbers Are Smaller Than the Current Number
     public static void main(String[] args) {
-        List<Integer> nums = Arrays.asList(-6,2,5,-2,-7,-1,3);
-        int target = -2;
-        int count = 0;
 
-        for (int i = 0; i <nums.size(); i++) {
-            for (int j = i+1; j <nums.size(); j++) {
-                if ((nums.get(i)+nums.get(j)) < target) {
-                    count++;
-                    System.out.println(nums.get(i)+" + " + nums.get(j)+ " == " + (nums.get(i)+nums.get(j)));
-                }
+        int[] nums = new int[] {8,1,2,2,3};
+        int[] result = new int[nums.length];
+
+        for (int i = 0; i < nums.length; i++) {
+            int count=0;
+            for (int j = 0; j < nums.length; j++) {
+                if (nums[j] < nums[i]) count++;
             }
+            result[i]=count;
         }
-        System.out.println(count);
+        System.out.println(Arrays.toString(result));
     }
 }
