@@ -3,36 +3,23 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
-import java.util.concurrent.Semaphore;
-
-import java.util.concurrent.Phaser;
 
 public class Program {
-
+//2824. Count Pairs Whose Sum is Less than Target
     public static void main(String[] args) {
+        List<Integer> nums = Arrays.asList(-6,2,5,-2,-7,-1,3);
+        int target = -2;
+        int count = 0;
 
-        int[] nums1 = new int[]{4,9};
-        int[] nums2 = new int[]{9,4,9};
-
-        List<Integer> list = new ArrayList<>();
-
-        for (int i=0; i<nums1.length; i++) {
-            for (int j = 0; j < nums2.length; j++) {
-                if ((nums1[i] == nums2[j]) && (!list.contains(nums1[i]))) {
-                    list.add(nums1[i]);
-                    break;
+        for (int i = 0; i <nums.size(); i++) {
+            for (int j = i+1; j <nums.size(); j++) {
+                if ((nums.get(i)+nums.get(j)) < target) {
+                    count++;
+                    System.out.println(nums.get(i)+" + " + nums.get(j)+ " == " + (nums.get(i)+nums.get(j)));
                 }
             }
         }
-        int[] res = new int[list.size()];
-        int i=0;
-        for (Integer lis: list) {
-            res[i] = lis;
-            i++;
-        }
-
-        System.out.println(res);
+        System.out.println(count);
     }
 }
