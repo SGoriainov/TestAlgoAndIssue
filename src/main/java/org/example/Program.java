@@ -1,24 +1,26 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 public class Program {
-//1365. How Many Numbers Are Smaller Than the Current Number
+//121. Best Time to Buy and Sell Stock
     public static void main(String[] args) {
 
-        int[] nums = new int[] {8,1,2,2,3};
-        int[] result = new int[nums.length];
+        int[] prices = new int[] {2,4,1};
+        int min= Integer.MAX_VALUE;
+        int profitToday=0;
+        int bestProfit =0;
 
-        for (int i = 0; i < nums.length; i++) {
-            int count=0;
-            for (int j = 0; j < nums.length; j++) {
-                if (nums[j] < nums[i]) count++;
+        for(int i = 0; i < prices.length; i++){
+            if(prices[i] < min){
+                min = prices[i];
             }
-            result[i]=count;
+            profitToday = prices[i] - min;
+            if( profitToday > bestProfit ){
+                bestProfit = profitToday;
+            }
         }
-        System.out.println(Arrays.toString(result));
+        System.out.println(bestProfit);
     }
 }
