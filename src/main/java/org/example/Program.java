@@ -4,23 +4,17 @@ import java.util.*;
 
 
 public class Program {
-//121. Best Time to Buy and Sell Stock
+//217. Contains Duplicate
     public static void main(String[] args) {
 
-        int[] prices = new int[] {2,4,1};
-        int min= Integer.MAX_VALUE;
-        int profitToday=0;
-        int bestProfit =0;
+        int[] nums = new int[]{1, 2, 3, 4};
+        Set<Integer> set = new HashSet<>();
 
-        for(int i = 0; i < prices.length; i++){
-            if(prices[i] < min){
-                min = prices[i];
-            }
-            profitToday = prices[i] - min;
-            if( profitToday > bestProfit ){
-                bestProfit = profitToday;
-            }
+        for (int num : nums) {
+            set.add(num);
         }
-        System.out.println(bestProfit);
+        if (nums.length > set.size()) System.out.println(true);
+        else System.out.println(false);
     }
+
 }
