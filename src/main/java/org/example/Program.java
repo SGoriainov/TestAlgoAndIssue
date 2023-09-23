@@ -13,8 +13,7 @@ public class Program {
         for (int num : nums) {
             set.add(num);
         }
-        if (nums.length > set.size()) System.out.println(true);
-        else System.out.println(false);
+
     }
 
 }
