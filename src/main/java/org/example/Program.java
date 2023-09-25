@@ -4,22 +4,20 @@ import java.util.*;
 
 
 public class Program {
-//217. Contains Duplicate
+//53. Maximum Subarray. Using Kadane
     public static void main(String[] args) {
 
-        int[] nums = new int[]{1, 2, 3, 5};
-        int n = nums.length;
-        int[] result = new int[n];
+        int[] nums = new int[]{1, 2, -5, 1, 2, 3};
 
-        for (int i = 0; i < n; i++) {
-            int sum = 1;
-            for (int j = 0; j < n; j++) {
-                if (i == j) continue;
-                sum = sum * nums[j];
-            }
-            result[i] = sum;
+        int currValue =0;
+        int bestValue =0;
+
+        for (int i = 0; i < nums.length; i++) {
+            currValue = currValue + nums[i];
+            if (currValue < 0) currValue = 0;
+
+            if (currValue > bestValue) bestValue = currValue;
         }
-
+        System.out.println(bestValue);
     }
-
 }
