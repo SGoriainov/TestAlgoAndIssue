@@ -7,14 +7,14 @@ public class Program {
 //53. Maximum Subarray. Using Kadane
     public static void main(String[] args) {
 
-        int[] nums = new int[]{1, 2, -5, 1, 2, 3};
+        int[] nums = new int[]{-8, -3, -6, -2, -5, -4, 2, 0};
 
         int currValue =0;
-        int bestValue =0;
+        int bestValue =Integer.MIN_VALUE;
 
         for (int i = 0; i < nums.length; i++) {
             currValue = currValue + nums[i];
-            if (currValue < 0) currValue = 0;
+            if (currValue < nums[i]) currValue = nums[i];
 
             if (currValue > bestValue) bestValue = currValue;
         }
