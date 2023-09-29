@@ -4,20 +4,23 @@ import java.util.*;
 
 
 public class Program {
-//53. Maximum Subarray. Using Kadane
+//152. Maximum Product Subarray
     public static void main(String[] args) {
 
-        int[] nums = new int[]{-8, -3, -6, -2, -5, -4, 2, 0};
+        int[] nums = new int[]{-2,0,-1};
 
-        int currValue =0;
-        int bestValue =Integer.MIN_VALUE;
+        int min = nums[0];
+        int max = nums[0];
+        int res=nums[0];
 
-        for (int i = 0; i < nums.length; i++) {
-            currValue = currValue + nums[i];
-            if (currValue < nums[i]) currValue = nums[i];
+        for (int i=1; i<nums.length; i++) {
 
-            if (currValue > bestValue) bestValue = currValue;
+            int temp = max * nums[i];
+
+            max = Integer.max(nums[i],(Integer.max(nums[i]*min, nums[i]*max)));
+            min = Integer.min(nums[i],(Integer.min(nums[i]*min, temp)));
+            res = Integer.max(res,max);
         }
-        System.out.println(bestValue);
+        System.out.println(res);
     }
 }
