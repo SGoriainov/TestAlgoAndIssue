@@ -9,9 +9,16 @@ public class Program {
 
         int[] nums = new int[]{3,4,5,1,2};
 
-        for( int i=1; i< nums.length; i++) {
-            if(nums[i]<= nums[i-1]) System.out.println(nums[i]);
-
+        int low = 0;
+        int high = nums.length - 1;
+        while(low < high){
+            int mid = (low + high) / 2;
+            if(nums[high] < nums[mid]){
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
         }
+
     }
 }
