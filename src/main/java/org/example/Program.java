@@ -10,26 +10,15 @@ public class Program {
         int[] nums = new int[]{4,5,6,7,0,1,2};
         int target =3 ;
 
-        int low = 0;
-        int high = nums.length-1;
 
-        while(low<=high) {
-            int mid = low+(high-low) /2;
-
-            if(nums[mid]==target) {
-                System.out.println(mid);
-                break;
+        int n = nums.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (nums[i] + nums[j] == target) {
+                    return new int[]{i, j};
+                }
             }
-            if(nums[low] <= nums[mid]) {
-                if(target >= nums[low] && target <nums[mid]) high = mid-1;
-                else low = mid+1;
-            }
-            if(nums[high] >= nums[mid]) {
-                if (target <= nums[high] && target > nums[mid]) low = mid+1;
-                else high = mid-1;
-            }
-            System.out.println("mid =" +mid +"   low= "+low+"   high="+high);
         }
-
+        return new int[]{}; // No solution found
     }
 }
