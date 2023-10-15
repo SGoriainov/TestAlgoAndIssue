@@ -11,10 +11,16 @@ public class Program {
         int target =3 ;
 
 
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for (int i = 0; i < nums.length; map.put(nums[i], i++))
-            if (map.containsKey(target - nums[i]))
-                return new int[] {map.get(target - nums[i]), i};
-        return new int[] {0, 0};
+        HashMap<Integer, Integer> tracker = new HashMap<Integer, Integer>();
+        int len = nums.length;
+        for(int i = 0; i < len; i++){
+            if(tracker.containsKey(nums[i])){
+                int left = tracker.get(nums[i]);
+                return new int[]{left+1, i+1};
+            }else{
+                tracker.put(target - nums[i], i);
+            }
+        }
+        return new int[2];
     }
 }
