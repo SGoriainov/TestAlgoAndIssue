@@ -11,16 +11,23 @@ public class Program {
         int target =3 ;
 
 
-        HashMap<Integer, Integer> tracker = new HashMap<Integer, Integer>();
-        int len = nums.length;
-        for(int i = 0; i < len; i++){
-            if(tracker.containsKey(nums[i])){
-                int left = tracker.get(nums[i]);
-                return new int[]{left+1, i+1};
-            }else{
-                tracker.put(target - nums[i], i);
+        int count=0;
+        for(int i=0;i<grid.length;i++)
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]=='1'){
+                    dfsFill(grid,i,j);
+                    count++;
+                }
             }
+        return count;
+    }
+    private void dfsFill(char[][] grid,int i, int j) {
+        if (i >= 0 && j >= 0 && i < grid.length && j < grid[0].length && grid[i][j] == '1') {
+            grid[i][j] = '0';
+            dfsFill(grid, i + 1, j);
+            dfsFill(grid, i - 1, j);
+            dfsFill(grid, i, j + 1);
+            dfsFill(grid, i, j - 1);
         }
-        return new int[2];
     }
 }
