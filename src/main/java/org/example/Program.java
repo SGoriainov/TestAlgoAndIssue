@@ -7,47 +7,29 @@ public class Program {
 //1. Two Sum
     public static void main(String[] args) {
 
-        public List<Interval> insert (List < Interval > intervals, Interval newInterval){
-            List<Interval> result = new ArrayList<>();
-            if (intervals == null || newInterval == null) return result;
-            int iStart = findStartPos(intervals, newInterval.start);
-            int iEnd = findEndPos(intervals, newInterval.end);
-            if (iStart > 0 && intervals.get(iStart - 1).end >= newInterval.start) iStart--;
-            if (iEnd == intervals.size() || intervals.get(iEnd).start > newInterval.end) iEnd--;
-
-            //If not in the corner cases, this condition should apply.
-            if (iStart <= iEnd) {
-                newInterval = new Interval(Math.min(newInterval.start, intervals.get(iStart).start), Math.max(newInterval.end, intervals.get(iEnd).end));
-            }
-
-            int i = 0;
-            while (i < iStart) result.add(intervals.get(i++));
-            result.add(newInterval);
-            i = iEnd + 1;
-            while (i < intervals.size()) result.add(intervals.get(i++));
-            return result;
+        public boolean wordBreak(String s, Set<String> dict) {
+            // DFS
+            Set<Integer> set = new HashSet<Integer>();
+            return dfs(s, 0, dict, set);
         }
 
-        private int findStartPos (List < Interval > intervals,int value){
-            int l = 0, r = intervals.size() - 1;
-            while (l <= r) {
-                int m = (l + r) >> 1;
-                if (intervals.get(m).start == value) return m;
-                else if (intervals.get(m).start < value) l = m + 1;
-                else r = m - 1;
+        private boolean dfs(String s, int index, Set<String> dict, Set<Integer> set){
+            // base case
+            if(index == s.length()) return true;
+            // check memory
+            if(set.contains(index)) return false;
+            // recursion
+            for(int i = index+1;i <= s.length();i++){
+                String t = s.substring(index, i);
+                if(dict.contains(t))
+                    if(dfs(s, i, dict, set))
+                        return true;
+                    else
+                        set.add(i);
             }
-            return l;
+            set.add(index);
+            return false;
         }
 
-        private int findEndPos (List < Interval > intervals,int value){
-            int l = 0, r = intervals.size() - 1;
-            while (l <= r) {
-                int m = (l + r) >> 1;
-                if (intervals.get(m).end == value) return m;
-                else if (intervals.get(m).end < value) l = m + 1;
-                else r = m - 1;
-            }
-            return l;
-        }
     }
 }
