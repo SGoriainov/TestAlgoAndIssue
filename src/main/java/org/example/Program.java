@@ -5,12 +5,18 @@ import java.util.*;
 
 public class Program {
 //1. Two Sum
-    public static void main(String[] args) {
+public int maxArea(int[] height) {
+    int left = 0, right = height.length - 1;
+    int maxArea = 0;
 
-        public int[] countBits ( int num){
-            int[] f = new int[num + 1];
-            for (int i = 1; i <= num; i++) f[i] = f[i >> 1] + (i & 1);
-            return f;
-        }
+    while (left < right) {
+        maxArea = Math.max(maxArea, Math.min(height[left], height[right])
+                * (right - left));
+        if (height[left] < height[right])
+            left++;
+        else
+            right--;
     }
+
+    return maxArea;
 }
