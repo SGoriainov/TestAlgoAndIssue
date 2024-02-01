@@ -4,54 +4,23 @@ import java.util.*;
 
 
 public class Main {
-    //297. Serialize and Deserialize Binary Tree
+    //26. Remove Duplicates from Sorted Array
     public static void main(String[] args) {
-        class TreeNode {
-            int val;
-            TreeNode left;
-            TreeNode right;
+        class Solution {
+            public int removeDuplicates(int[] nums) {
+                if(nums.length == 0)
+                    return 0;
 
-            TreeNode(int x) {
-                val = x;
-            }
-        }
-        class Codec {
-            private static final String spliter = ",";
-            private static final String NN = "X";
+                int addIndex = 1; //index that unique characters will be inserted at
 
-            // Encodes a tree to a single string.
-            public String serialize(TreeNode root) {
-                StringBuilder sb = new StringBuilder();
-                buildString(root, sb);
-                return sb.toString();
-            }
+                for(int i = 0; i < nums.length - 1; i++) {
 
-            private void buildString(TreeNode node, StringBuilder sb) {
-                if (node == null) {
-                    sb.append(NN).append(spliter);
-                } else {
-                    sb.append(node.val).append(spliter);
-                    buildString(node.left, sb);
-                    buildString(node.right, sb);
+                    if(nums[i] < nums[i + 1]){ //if true, num[i + 1] is a new unique number
+                        nums[addIndex] = nums[i + 1];
+                        addIndex++;
+                    }
                 }
-            }
-
-            // Decodes your encoded data to tree.
-            public TreeNode deserialize(String data) {
-                Deque<String> nodes = new LinkedList<>();
-                nodes.addAll(Arrays.asList(data.split(spliter)));
-                return buildTree(nodes);
-            }
-
-            private TreeNode buildTree(Deque<String> nodes) {
-                String val = nodes.remove();
-                if (val.equals(NN)) return null;
-                else {
-                    TreeNode node = new TreeNode(Integer.valueOf(val));
-                    node.left = buildTree(nodes);
-                    node.right = buildTree(nodes);
-                    return node;
-                }
+                return addIndex;
             }
         }
     }
