@@ -4,24 +4,15 @@ import java.util.*;
 
 
 public class Main {
-    //26. Remove Duplicates from Sorted Array
+    //406. Queue Reconstruction by Height
     public static void main(String[] args) {
-        class Solution {
-            public int removeDuplicates(int[] nums) {
-                if(nums.length == 0)
-                    return 0;
+        public int[][] reconstructQueue(int[][] people) {
+            Arrays.sort(people, (a,b) -> a[0] == b[0] ? a[1] - b[1] : b[0] - a[0]);
 
-                int addIndex = 1; //index that unique characters will be inserted at
+            List<int[]> ordered = new LinkedList<>();
+            for (int[] p: people) ordered.add(p[1], p);
 
-                for(int i = 0; i < nums.length - 1; i++) {
-
-                    if(nums[i] < nums[i + 1]){ //if true, num[i + 1] is a new unique number
-                        nums[addIndex] = nums[i + 1];
-                        addIndex++;
-                    }
-                }
-                return addIndex;
-            }
+            return ordered.toArray(new int[people.length][2]);
         }
     }
 }
