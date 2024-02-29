@@ -4,15 +4,15 @@ import java.util.*;
 
 
 public class Main {
-    //406. Queue Reconstruction by Height
+    //55. Jump Game
     public static void main(String[] args) {
-        public int[][] reconstructQueue(int[][] people) {
-            Arrays.sort(people, (a,b) -> a[0] == b[0] ? a[1] - b[1] : b[0] - a[0]);
-
-            List<int[]> ordered = new LinkedList<>();
-            for (int[] p: people) ordered.add(p[1], p);
-
-            return ordered.toArray(new int[people.length][2]);
+        public boolean canJump(int[] nums) {
+            int reachable = 0;
+            for(int i = 0; i < nums.length; i ++) {
+                if(i > reachable) return false;
+                reachable = Math.max(reachable, i + nums[i]);
+            }
+            return true;
         }
     }
 }
