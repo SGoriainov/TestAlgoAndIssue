@@ -4,17 +4,26 @@ import java.util.*;
 
 
 public class Solution {
-    public static String defangIPaddr(String address) {
+    public static int minPartitions(String n) {
 
-        String newAdress = address.replaceAll("\\.", "[,]");
-    return newAdress;
+        char[] ch = n.toCharArray();
+        int max = Integer.MIN_VALUE;
+        int charToInt = 0;
+        for (int i = 0; i < ch.length; i++) {
+            charToInt = Character.getNumericValue(ch[i]);
+            if (charToInt == 9) return charToInt;
+            if (charToInt > max) {
+                max = charToInt;
+            }
+        }
+        return max;
     }
 
     public static void main(String[] args) {
 
-        String operations = "1.1.1.1";
+        String operations = "27346209830709182346";
 
-        System.out.println(defangIPaddr(operations));
+        System.out.println(minPartitions(operations));
 
     }
 }
