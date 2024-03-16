@@ -4,26 +4,25 @@ import java.util.*;
 
 
 public class Solution {
-    public static int minPartitions(String n) {
+    public static int numJewelsInStones(String jewels, String stones) {
+        int res =0;
+        for (int i = 0; i < stones.length(); i++) {
+            for (int j = 0; j < jewels.length(); j++) {
 
-        char[] ch = n.toCharArray();
-        int max = Integer.MIN_VALUE;
-        int charToInt = 0;
-        for (int i = 0; i < ch.length; i++) {
-            charToInt = Character.getNumericValue(ch[i]);
-            if (charToInt == 9) return charToInt;
-            if (charToInt > max) {
-                max = charToInt;
+                if(String.valueOf(jewels.charAt(j)).equals(String.valueOf(stones.charAt(i)))) {
+                    res++;
+                }
             }
         }
-        return max;
+        return res;
     }
 
     public static void main(String[] args) {
 
-        String operations = "27346209830709182346";
+        String operations = "ZZ";
+        String operations2 = "z";
 
-        System.out.println(minPartitions(operations));
+        System.out.println(numJewelsInStones(operations2,operations));
 
     }
 }
