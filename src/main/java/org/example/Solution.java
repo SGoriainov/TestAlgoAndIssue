@@ -5,23 +5,27 @@ import java.util.stream.IntStream;
 
 
 public class Solution {
-    public static int buildArray(String string) {
-        char ch;
-        int res = 0;
-        for (int i = 0; i < string.length(); i++) {
+    public static int numIdenticalPairs(int[] nums) {
 
-            res = res * 10 + (string.charAt(i) - '0');
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] == nums[j]) {
+                    count++;
+                }
+            }
         }
-        return res;
+        return count;
     }
 
     public static void main(String[] args) {
 
-        String st = "233";
+        //String st = "233";
         //char operations = 'e';
         //String[] operations2 = new int[] {"0,2,1,5,3,4"};
+        int[] nums = new int[]{1, 2, 3, 1, 1, 3};
 
-        System.out.println(buildArray(st));
+        System.out.println(numIdenticalPairs(nums));
 
     }
 }
