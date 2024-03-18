@@ -4,25 +4,23 @@ import java.util.*;
 
 
 public class Solution {
-    public static int numJewelsInStones(String jewels, String stones) {
-        int res =0;
-        for (int i = 0; i < stones.length(); i++) {
-            for (int j = 0; j < jewels.length(); j++) {
+    public static List<Integer> findWordsContaining(String[] words, char x) {
 
-                if(String.valueOf(jewels.charAt(j)).equals(String.valueOf(stones.charAt(i)))) {
-                    res++;
-                }
+        List <Integer> listWord = new ArrayList<>();
+        for (int i = 0; i < words.length; i++) {
+            if(words[i].contains(String.valueOf(x))) {
+                listWord.add(i);
             }
         }
-        return res;
+        return listWord;
     }
 
     public static void main(String[] args) {
 
-        String operations = "ZZ";
-        String operations2 = "z";
+        char operations = 'e';
+        String[] operations2 = new String[] {"leet","code"};
 
-        System.out.println(numJewelsInStones(operations2,operations));
+        System.out.println(findWordsContaining(operations2,operations));
 
     }
 }
