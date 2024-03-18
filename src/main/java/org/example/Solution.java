@@ -1,26 +1,22 @@
 package org.example;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 
 public class Solution {
-    public static List<Integer> findWordsContaining(String[] words, char x) {
-
-        List <Integer> listWord = new ArrayList<>();
-        for (int i = 0; i < words.length; i++) {
-            if(words[i].contains(String.valueOf(x))) {
-                listWord.add(i);
-            }
-        }
-        return listWord;
+    public static int [] getConcatenation(int[] nums) {
+        int [] nums2 = Arrays.copyOf(nums, nums.length);
+        return IntStream.concat(Arrays.stream(nums), Arrays.stream(nums2)).toArray();
+        //return Arrays.toString(newArray);
     }
 
     public static void main(String[] args) {
 
-        char operations = 'e';
-        String[] operations2 = new String[] {"leet","code"};
+        //char operations = 'e';
+       int[] operations2 = new int[] {1,2,1};
 
-        System.out.println(findWordsContaining(operations2,operations));
+        System.out.println( getConcatenation(operations2));
 
     }
 }
