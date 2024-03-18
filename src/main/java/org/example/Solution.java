@@ -5,18 +5,21 @@ import java.util.stream.IntStream;
 
 
 public class Solution {
-    public static int [] getConcatenation(int[] nums) {
-        int [] nums2 = Arrays.copyOf(nums, nums.length);
-        return IntStream.concat(Arrays.stream(nums), Arrays.stream(nums2)).toArray();
-        //return Arrays.toString(newArray);
+    public static int[] buildArray(int[] nums) {
+        int[] newArray = new int[nums.length];
+        for (int i = 0; i <nums.length; i++) {
+            newArray[i]= nums[nums[i]];
+
+        }
+        return newArray;
     }
 
     public static void main(String[] args) {
 
         //char operations = 'e';
-       int[] operations2 = new int[] {1,2,1};
+       int[] operations2 = new int[] {0,2,1,5,3,4};
 
-        System.out.println( getConcatenation(operations2));
+        System.out.println( buildArray(operations2));
 
     }
 }
