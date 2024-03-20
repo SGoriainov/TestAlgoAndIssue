@@ -5,17 +5,23 @@ import java.util.stream.IntStream;
 
 
 public class Solution {
-    public static int numIdenticalPairs(int[] nums) {
+    public static int countNegatives(int[][] grid) {
+        int[] singleArr = Arrays.stream(grid)
+                .flatMapToInt(Arrays::stream)
+                .sorted()
+                .toArray();
 
-        int count = 0;
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                if (nums[i] == nums[j]) {
-                    count++;
-                }
+        int res = singleArr.length;
+
+        for (int i = 0; i < singleArr.length; i++) {
+            if (singleArr[i] >= 0) {
+                res = i;
+                break;
             }
         }
-        return count;
+
+        return res;
+
     }
 
     public static void main(String[] args) {
@@ -23,9 +29,9 @@ public class Solution {
         //String st = "233";
         //char operations = 'e';
         //String[] operations2 = new int[] {"0,2,1,5,3,4"};
-        int[] nums = new int[]{1, 2, 3, 1, 1, 3};
+        int[][] nums = new int[][]{{4, 3, 2, -1}, {3, 2, 1, -1}, {1, 1, -1, -2}, {-1, -1, -2, -3}};
 
-        System.out.println(numIdenticalPairs(nums));
+        System.out.println(countNegatives(nums));
 
     }
 }
