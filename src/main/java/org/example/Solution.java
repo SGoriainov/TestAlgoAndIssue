@@ -14,6 +14,9 @@ public class Solution {
         String str = "AAAABBBCCXYZDDDDEEEFFFAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBB";
         //A4B3C2XYZD4E3F3A6B28
         String result = "";
+        str += "x";
+        //str= str.concat("x");
+        System.out.println(str);
         int counter =1;
 
         for (int i = 0; i < str.length()-1; i++) {
@@ -25,11 +28,11 @@ public class Solution {
             }
         }
         // Обработка последнего символа
-        if (counter == 1) {
+        /*if (counter == 1) {
             result = result.concat(String.valueOf(str.charAt(str.length() - 1)));
         } else {
             result = result.concat(String.valueOf(str.charAt(str.length() - 1)) + counter);
-        }
+        }*/
         System.out.println(result);
     }
 }
