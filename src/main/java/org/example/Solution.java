@@ -1,38 +1,44 @@
 package org.example;
 
+
 import java.util.*;
 import java.util.stream.IntStream;
 
 
 public class Solution {
 
+    public static String setToGroup(Set<Integer> set) {
+        List<Integer> list = new ArrayList<>(set);
+        Collections.sort(list);
+        list.add(list.get(list.size() - 1));
+        System.out.println(list);
+        // "0-5,8-9,11"
 
+        StringBuilder result = new StringBuilder(String.valueOf(list.get(0)));
+        int startGroup = 0;
+        int endGroup = 0;
+        int count = 0;
+        for (int i = 0; i < list.size() - 1; i++) {
+            startGroup = list.get(i + 1);
+            endGroup = list.get(i);
+            if ((startGroup > endGroup + 1) && (count == 1)) {
+                result.append("," + startGroup);
+                count = 0;
+            } else if (list.get(i + 1) > list.get(i) + 1) {
+                result.append("-" + endGroup + "," + startGroup);
+                count = 0;
+            }
+            count++;
+        }
+        result.append("-"+list.get(list.size()-1));
+        return String.valueOf(result);
+    }
 
 
     public static void main(String[] args) {
 
-        String str = "AAAABBBCCXYZDDDDEEEFFFAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBB";
-        //A4B3C2XYZD4E3F3A6B28
-        String result = "";
-        str += "x";
-        //str= str.concat("x");
-        System.out.println(str);
-        int counter =1;
+        Set<Integer> set = new HashSet<>(Arrays.asList(2, 3, 4, 6, 8, 9, 10));
 
-        for (int i = 0; i < str.length()-1; i++) {
-            if(str.charAt(i) == str.charAt(i+1)) counter++;
-            else if (counter == 1) result= result.concat(String.valueOf(str.charAt(i)));
-            else {
-                result= result.concat(String.valueOf(str.charAt(i))+counter);
-                counter =1;
-            }
-        }
-        // Обработка последнего символа
-        /*if (counter == 1) {
-            result = result.concat(String.valueOf(str.charAt(str.length() - 1)));
-        } else {
-            result = result.concat(String.valueOf(str.charAt(str.length() - 1)) + counter);
-        }*/
-        System.out.println(result);
+        System.out.println(setToGroup(set));
     }
 }
