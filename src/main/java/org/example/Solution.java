@@ -7,44 +7,44 @@ import java.util.stream.IntStream;
 
 public class Solution {
 
-    public static int maxOnesLength(int[] nums) {
-        int maxOnesLength = 0;
-        int startOnesIndex = 0;
-        int onesCounter =0;
-        int zerosCounter = 0;
-        int secondOnesIndex =0;
-
-        for (int i = 0; i < nums.length; i++) {
-            if( nums[i] ==1 && startOnesIndex ==0) { //если у нас начало последовательности единиц
-                startOnesIndex = i;
-                onesCounter++;
-            } else if (nums[i]==1) { //считаем последоватьность единиц
-                onesCounter++;
-            } else if (nums[i] == 0 && startOnesIndex !=0) {//если мы встретили 0 в последоватльности
-                zerosCounter++;
-                if (zerosCounter==2) {//если в последовательности единиц мы встречаем второй ноль
-                    zerosCounter--;
-                    maxOnesLength = Math.max(maxOnesLength,onesCounter+1);
-                    startOnesIndex =secondOnesIndex;
-                    onesCounter = nums[i]-secondOnesIndex;
-                    secondOnesIndex=0;
-                }
-                //если после 0 в последовательности идет 1, то запоминаем индекс второй последовательности
-            } else if (nums[i]==1 && zerosCounter ==1 && secondOnesIndex ==0) {
-                secondOnesIndex = i;
-            } else if (nums[i]==0) { //если идут нули
-                startOnesIndex =0;
-                zerosCounter =0;
-                secondOnesIndex =0;
-                onesCounter =0;
-            }
+    public static int maxNumGuests(int[][] guests) {
+        int res = 0;
+        //{1, 2}, {1, 3}, {2, 4}, {2, 3}
+        // для каждого дня посчитаем, сколько приехало и сколько отъехало
+        Map<Integer, Integer> arriving = new HashMap<>();
+        Map<Integer, Integer> leaving = new HashMap<>();
+        //перебираем гостей, считаем сколько гостей прибыло и убыло в каждый из дней
+        for (int[] guest : guests) {
+            arriving.put(guest[0], arriving.getOrDefault(guest[0], 0) + 1);
+            leaving.put(guest[1], leaving.getOrDefault(guest[1], 0) + 1);
         }
 
-        return Math.max(maxOnesLength,onesCounter);
+        int current = 0;
+        //сколько у нас вобще дней с жильцами
+        Set<Integer> days = new HashSet<>();
+        days.addAll(arriving.keySet());
+        days.addAll(leaving.keySet());
+
+        // едем по дням в порядке увеличения, добавляем приехавших и убавляем уехавших,
+        // считаем сколько стало
+        List<Integer> sortedDays = new ArrayList<>(days);
+        Collections.sort(sortedDays);
+
+        //считаем сколько жильцов было в каждый из дней
+        for (int day : sortedDays) {
+            current -= leaving.getOrDefault(day, 0);
+            current += arriving.getOrDefault(day, 0);
+            if (current > res) {
+                res = current;
+            }
+
+        }
+
+        return res;
     }
 
     public static void main(String[] args) {
-        int[] nums = {0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1};
-        System.out.println(maxOnesLength(nums)); // Output should be 4
+        int[][] guests = {{1, 2}, {1, 3}, {2, 4}, {2, 3}};
+        System.out.println(maxNumGuests(guests)); // Output should be 3
     }
 }
