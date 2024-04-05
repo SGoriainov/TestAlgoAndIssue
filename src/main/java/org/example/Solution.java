@@ -7,26 +7,33 @@ import java.util.stream.IntStream;
 
 public class Solution {
 
-    public static int maxNumGuests(int[][] guests) {
-        int maxGuests = 0;
-        Map<Integer, Integer> guestsCount = new HashMap<>();
+    public static List<List<String>> groupWords(String[] words) {
+        Map<String, List<String>> groups = new HashMap<>();
 
-        for (int[] guest : guests) {
-            guestsCount.put(guest[0], guestsCount.getOrDefault(guest[0], 0) + 1);
-            guestsCount.put(guest[1] + 1, guestsCount.getOrDefault(guest[1] + 1, 0) - 1);
+        for (String word : words) {
+            char[] charArray = word.toCharArray();
+            Arrays.sort(charArray);
+            String key = new String(charArray);
+            if (!groups.containsKey(key)) {
+                groups.put(key, new ArrayList<>());
+            }
+            groups.get(key).add(word);
         }
 
-        int currentGuests = 0;
-        for (int day : guestsCount.keySet()) {
-            currentGuests += guestsCount.get(day);
-            maxGuests = Math.max(maxGuests, currentGuests);
+        List<List<String>> result = new ArrayList<>();
+        for (List<String> group : groups.values()) {
+            group.sort(null);
+            result.add(group);
         }
 
-        return maxGuests;
+        return result;
     }
 
     public static void main(String[] args) {
-        int[][] guests = {{1, 2}, {1, 3}, {2, 4}, {2, 3}};
-        System.out.println(maxNumGuests(guests)); // Output should be 3
+        String[] words = {"eat", "tea", "tan", "ate", "nat", "bat"};
+        List<List<String>> groupedWords = groupWords(words);
+        for (List<String> group : groupedWords) {
+            System.out.println(group);
+        }
     }
 }
