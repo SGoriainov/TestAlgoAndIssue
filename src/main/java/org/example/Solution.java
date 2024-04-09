@@ -7,33 +7,44 @@ import java.util.stream.IntStream;
 
 public class Solution {
 
-    public static List<List<String>> groupWords(String[] words) {
-        Map<String, List<String>> groups = new HashMap<>();
+    public static int[][] merge(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            return new int[0][];
+        }
+        //обязательно сортируем отрезки
+        List<int[]> resultRanges = new ArrayList<>();
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
 
-        for (String word : words) {
-            char[] charArray = word.toCharArray();
-            Arrays.sort(charArray);
-            String key = new String(charArray);
-            if (!groups.containsKey(key)) {
-                groups.put(key, new ArrayList<>());
+        int[] lastRange = null;
+
+        for (int[] rng : intervals) {
+            //если текущий отрезок не пересекается с последним отрезком
+            if (lastRange == null || rng[0] > lastRange[1]) {
+                resultRanges.add(rng);
+                lastRange = rng;
+            } else {
+                //пересекатеся с последним отрезком, присваиваем новое значение концу отрезка
+                //значение в resultRanges автоматически обновляется, т.к ссылаются на одну ячейку памяти в массиве
+                lastRange[1] = Math.max(rng[1], lastRange[1]);
             }
-            groups.get(key).add(word);
         }
 
-        List<List<String>> result = new ArrayList<>();
-        for (List<String> group : groups.values()) {
-            group.sort(null);
-            result.add(group);
-        }
-
-        return result;
+        return resultRanges.toArray(new int[resultRanges.size()][]);
     }
 
     public static void main(String[] args) {
-        String[] words = {"eat", "tea", "tan", "ate", "nat", "bat"};
-        List<List<String>> groupedWords = groupWords(words);
-        for (List<String> group : groupedWords) {
-            System.out.println(group);
+        int[][] intervals = {
+                {1, 3},
+                {2, 6},
+                {8, 10},
+                {9, 12},
+                {14, 17}
+        };
+
+        int[][] mergedIntervals = merge(intervals);
+
+        for (int[] interval : mergedIntervals) {
+            System.out.println(Arrays.toString(interval));
         }
     }
 }
