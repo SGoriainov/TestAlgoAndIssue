@@ -7,30 +7,24 @@ import java.util.stream.IntStream;
 
 public class Solution {
 
-    public static int majorityElement(int[] nums) {
-        Map <Integer,Integer> groups = new HashMap<>();
-        int max = 0;
-        int res = 0;
-        for(int num : nums) {
-            if(!groups.containsKey(num)) {
-                groups.put(num, 0);
-
-            }
-            groups.put(num,groups.get(num)+1);
-
-            if(groups.get(num) > max) {
-                max = groups.get(num);
-                res = num;
-            }
-        }
-        return res;
+    public static boolean isAnagram(String s, String t) {
+        //Map<String,String> stringMap = new HashMap<>();
+        char[] charS = s.toCharArray();
+        char[] charT = t.toCharArray();
+        Arrays.sort(charS);
+        Arrays.sort(charT);
+        String Ss= new String(charS);
+        String Tt= new String(charT);
+        if(Ss.equals(Tt)) return true;
+        return false;
     }
 
 
     public static void main(String[] args) {
-        int[] intervals = new int[]{5,1,1,1,2,2,3,3,3,3};
-
-        System.out.println(majorityElement(intervals));
+        //int[] intervals = new int[]{5,1,1,1,2,2,3,3,3,3};
+        String s = "anagram";
+        String t = "nagaram";
+        System.out.println(isAnagram(s,t));
 
 
     }
